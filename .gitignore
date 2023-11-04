@@ -1,3 +1,10 @@
+# Ders ile alakali
+notlar.ods
+kaynaklar/
+sorular/
+izlence_syllabus/
+dersler/cevaplar/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
