@@ -1,5 +1,40 @@
 import numpy as np
 
+# Gauss Eleme Yontemi - Ust ucgen forma getirerek - Geri Yerine koyma Iceren
+def gauss_eleme_ust_ucgen(katsayiMat, sonucVec):
+    # Boyut
+    n= len(sonucVec)
+    # Katsayı ve sonuç matrislerini float tipine çevir.
+    katsayiMat= katsayiMat.astype(float)
+    sonucVec= sonucVec.astype(float)
+    # Üst üçgensel matris oluştur.
+    for k in range(0, n-1): # k: pivot satırı
+        for i in range(k+1, n): # i: pivot satırından sonraki satırlar
+            #print(f"katsayiMat Once\n {katsayiMat}")
+            if katsayiMat[i, k] != 0:
+                lamb = katsayiMat[i, k]/ katsayiMat[k, k]
+                #print(f"lamb: {lamb}")
+                # Katsayı matrisini değiştir
+                #print(f"i, k: {i}, {k}")
+                #print(f"katsayiMat[i, k:n]: {katsayiMat[i, k:n]}")
+                #print(f"lamb*katsayiMat[k, k:n]: {lamb*katsayiMat[k, k:n]}")
+                #print(f"katsayiMat[i, k:n]- lamb* katsayiMat[k, k:n]: {katsayiMat[i, k:n]- lamb* katsayiMat[k, k:n]}")
+                katsayiMat[i, :]= katsayiMat[i, :]- lamb* katsayiMat[k, :]
+                # Sonuç vektörünü değiştir
+                sonucVec[i]= sonucVec[i]- lamb* sonucVec[k]
+            #print(f"katsayiMat Sonra\n {katsayiMat}")
+    # Geri Yerine Koyma Yap
+    cozumVek= np.zeros(n)
+    # Son satırdan başlayarak geriye doğru ilerleme
+    for i in range(n-1, -1, -1):
+        cozum= sonucVec[i]
+        # Üst üçgensel formülde yerine koyma
+        for j in range(i+1, n):
+            cozum= cozum- katsayiMat[i,j] * cozumVek[j]
+        # Katsayı matrisinde doğrudan çözümü bulma
+        cozumVek[i]= cozum/ katsayiMat[i,i]
+    return cozumVek
+
 def faktoriyel(sayi):
     if not isinstance(sayi, int):
         return False
